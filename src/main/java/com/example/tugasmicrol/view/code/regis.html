@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form id="myform" method="post">
+    <div>
+        <label>Masukkan ID</label>
+        <input type="number" id="id" name="id" required>
+    </div>
+    <div>
+        <label>Masukkan Nama</label>
+        <input type="text" id="name" name="name" required>
+    </div>
+    <div>
+        <label>Masukkan NIP</label>
+        <input type="number" id="NIP" name="NIP" required>
+    </div>
+    <button type="button" onclick="submitData()">Submit</button>
+</form>
+
+<script>
+    function submitData() {
+        const id = document.getElementById("id").value;
+        const name = document.getElementById("name").value;
+        const NIP = document.getElementById("NIP").value;
+
+        const UserDTO = {
+            "id" : id,
+            "name" : name,
+            "nip" : NIP
+        }
+
+        fetch("http://localhost:8080/api/user/create", {
+            method: "POST",
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify(UserDTO)
+        })
+            .then(response => response.json())
+            .then(UserDTO => {
+                console.log("Response from server:", UserDTO);
+            })
+            .catch(error => console.error("Error:", error));
+
+        console.log("name : " + name)
+    }
+
+</script>
+
+</body>
+</html>
